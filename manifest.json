@@ -6,7 +6,8 @@
 
     "browser_action": {
         "default_icon": "icons/reading-icon.png",
-        "default_popup": "popup.html"
+        "default_popup": "popup.html",
+        "default_title": "Easy Reading"
     },
 
     "permissions": [
