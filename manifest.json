@@ -3,7 +3,6 @@
     "name": "easy-reading-plugin",
     "description": "A chrome plugin for reading easily.",
     "version": "1.0",
-    "default_locale": "zh_CN",
 
     "browser_action": {
         "default_icon": "icons/reading-icon.png",
