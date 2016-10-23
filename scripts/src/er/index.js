@@ -9,18 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-document.onmouseup = function() {
+document.addEventListener("dblclick", () => {
     const text = document.getSelection();
-    if(text !== '') {
-        // chrome.windows.create({'url': 'newPop.html', 'type': 'popup'}, function(window) {
-        //
-        // });
-        console.log(text);
-    }
-};
-
-document.addEventListener("mouseup", () => {
-    const text = document.getSelection();
-
     console.log(text);
+    if (text !== "") {
+        console.log(text.toString());
+    }
+
 });

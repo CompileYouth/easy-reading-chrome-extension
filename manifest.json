@@ -17,6 +17,12 @@
         "default_title": "Easy Reading"
     },
 
+    "content_scripts": [ {
+        "js": [ "scripts/src/er/index.js" ],
+        "matches": [ "<all_urls>" ],
+        "run_at": "document_start"
+    } ],
+
     "permissions": [
         "tabs",
         "contextMenus",
