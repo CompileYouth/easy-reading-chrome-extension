@@ -4,16 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("All things removed.");
         });
     });
-
-
-
 });
 
-document.addEventListener("dblclick", () => {
-    const text = document.getSelection();
-    console.log(text);
-    if (text !== "") {
-        console.log(text.toString());
+document.addEventListener("keyup", (e) => {
+    if (e.keyCode === 69) { // E or e
+        //show bubble
+        const text = document.getSelection();
+        if (text !== "") {
+            console.log(text.toString());
+        }
     }
-
 });
