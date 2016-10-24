@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "easy-reading-plugin",
-    "description": "A chrome plugin for reading easily.",
+    "description": "A Chrome plugin for reading easily.",
     "version": "1.0",
 
     "icons": {
@@ -11,21 +11,17 @@
         "16": "icons/16.png"
     },
 
-    "browser_action": {
-        "default_icon": "icons/reading-icon.png",
-        "default_popup": "popup.html",
-        "default_title": "Easy Reading"
-    },
-
-    "content_scripts": [ {
-        "js": [ "scripts/src/er/index.js" ],
-        "matches": [ "<all_urls>" ],
-        "run_at": "document_start"
-    } ],
+    "content_scripts": [
+        {
+            "matches": [ "http://www.theguardian.com/*", "https://www.theguardian.com/*" ],
+            "js": [ "scripts/src/lib/jquery-3.1.1.min.js", "scripts/src/chrome/content.js" ]
+        }
+    ],
 
     "permissions": [
         "tabs",
         "contextMenus",
-        "http://*/*", "https://*/*"
+        "http://*.theguardian.com/",
+        "https://*.theguardian.com/"
     ]
 }
