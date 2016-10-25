@@ -1,3 +1,7 @@
+body > .overlay {
+    z-index: 9999999;
+}
+
 #shanbay {
     z-index: 9999;
     height: 100px;
@@ -13,37 +17,26 @@
     background-position: center center;
     box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
     cursor: pointer;
-    transition: all 1s;
+    transition: all 0.8s;
 }
 
-#shanbay.readable {
+#shanbay.toReadable {
     transform: scale(50);
     background-image: none;
 }
 
-@keyframes transit {
-    0% {
-        background-image: none;
-    }
-    20% {
-        background-image: none;
-        bottom: 53%;
-        right: 52%;
-    }
-    50% {
-        background-image: none;
-        border-radius: 0;
-        bottom: 53%;
-        right: 52%;
-    }
-    100% {
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        border-radius: 0;
-        background-image: none;
-        width: auto;
-        height: auto;
-    }
+#shanbay.readable {
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #F9DFAC;
+    cursor: default;
+}
+
+.l-side-margins {
+    transition: opacity 0.3s;
+}
+.l-side-margins.reading {
+    opacity: 1 !important;
 }
