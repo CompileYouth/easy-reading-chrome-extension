@@ -36,4 +36,30 @@ $(() => {
         }, 800);
 
     });
+
+    const $detail = $(`<div class="word-detail" />`);
+
+    $(document).on("mouseup", (e) => {
+        console.log(e.clientX, e.clientY);
+        const selection = getSelectionText();
+        if (selection !== "") {
+            console.log(window.getSelection());
+            $detail.css({
+                top: e.pageY,
+                left: e.pageX
+            });
+            $(document.body).append($detail);
+        }
+    });
 });
+
+function getSelectionText() {
+    let text = "";
+    if (window.getSelection) {
+        text = window.getSelection().toString();
+    } else if (document.selection && document.selection.type != "Control") {
+        text = document.selection.createRange().text;
+    }
+
+    return text.trim();
+}
