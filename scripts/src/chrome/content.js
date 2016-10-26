@@ -62,6 +62,10 @@ $(() => {
             showDetailPanel($detail, direction);
         }
     });
+
+    $detail.on("blur", (e) => {
+        $detail.detach();
+    });
 });
 
 let isShow = false;
