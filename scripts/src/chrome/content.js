@@ -37,21 +37,40 @@ $(() => {
 
     });
 
-    const $detail = $(`<div class="word-detail" />`);
+    const $detail = $(`
+        <div class="word-detail">
+            <div class="overlay"></div>
+            <header>
+                <span class="word"></span>
+                <span class="microphone"></span>
+            </header>
+            <main></main>
+        </div>
+    `);
 
+    // Listen to mouseup to decide if show detail panel
     $(document).on("mouseup", (e) => {
-        console.log(e.clientX, e.clientY);
         const selection = getSelectionText();
         if (selection !== "") {
-            console.log(window.getSelection());
+            const clientRect = window.getSelection().getRangeAt(0).getBoundingClientRect();
+            const relative = document.body.parentNode.getBoundingClientRect();
+            const direction = getDirection(clientRect, relative);
             $detail.css({
-                top: e.pageY,
-                left: e.pageX
+                top: getDetailPanelTop(clientRect, relative),
+                left: getDetailPanelLeft(clientRect, relative)
             });
-            $(document.body).append($detail);
+            showDetailPanel($detail, direction);
         }
     });
 });
+
+let isShow = false;
+
+function showDetailPanel($detail, direction) {
+
+    $(document.body).append($detail);
+    isShow = true;
+}
 
 function getSelectionText() {
     let text = "";
@@ -62,4 +81,37 @@ function getSelectionText() {
     }
 
     return text.trim();
+}
+
+const detailPanelWidth = 200;
+const detailPanelHeight = 120;
+const gap = 10;
+
+function getDetailPanelTop(clientRect, relative) {
+    if (clientRect.top + clientRect.height + detailPanelHeight + gap > window.innerHeight) {
+        // panel is lower than the last line
+        return clientRect.bottom - relative.top - clientRect.height - detailPanelHeight - gap;
+    }
+    else {
+        return clientRect.bottom - relative.top + gap;
+    }
+}
+
+function getDetailPanelLeft(clientRect, relative) {
+    if (clientRect.left + detailPanelWidth + gap > window.innerWidth) {
+        // panel is overrided by right border
+        return window.innerWidth - detailPanelWidth - gap -20;
+    }
+    else {
+        return clientRect.left - relative.left;
+    }
+}
+
+function getDirection(clientRect, relative) {
+    if (clientRect.top + clientRect.height + detailPanelHeight + gap > window.innerHeight) {
+        return "up";
+    }
+    else {
+        return "down";
+    }
 }

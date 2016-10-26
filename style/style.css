@@ -44,7 +44,7 @@ body > .overlay {
 .word-detail {
     position: absolute;
     height: 120px;
-    width: 300px;
+    width: 200px;
     z-index: 10001;
     background: red;
 }
