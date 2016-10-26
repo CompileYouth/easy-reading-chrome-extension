@@ -47,6 +47,8 @@ $(() => {
             <main></main>
         </div>
     `);
+    $(document.body).append($detail);
+    $detail.hide();
 
     // Listen to mouseup to decide if show detail panel
     $(document).on("mouseup", (e) => {
@@ -55,24 +57,29 @@ $(() => {
             const clientRect = window.getSelection().getRangeAt(0).getBoundingClientRect();
             const relative = document.body.parentNode.getBoundingClientRect();
             const direction = getDirection(clientRect, relative);
-            $detail.css({
+            const position = {
                 top: getDetailPanelTop(clientRect, relative),
                 left: getDetailPanelLeft(clientRect, relative)
-            });
-            showDetailPanel($detail, direction);
+            };
+
+            showDetailPanel($detail, direction, position);
         }
     });
 
-    $detail.on("blur", (e) => {
-        $detail.detach();
-    });
 });
 
 let isShow = false;
 
-function showDetailPanel($detail, direction) {
+function showDetailPanel($detail, direction, position) {
+    if (isShow) {
+        $detail.hide();
+    }
 
-    $(document.body).append($detail);
+    $detail.css({
+        top: position.top,
+        left: position.left
+    });
+    $detail.slideDown();
     isShow = true;
 }
 
