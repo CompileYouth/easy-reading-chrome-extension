@@ -52,6 +52,7 @@ $(() => {
 
     // Listen to mouseup to decide if show detail panel
     $(document).on("mouseup", (e) => {
+        console.log("mouseup");
         const selection = getSelectionText();
         if (selection !== "") {
             const clientRect = window.getSelection().getRangeAt(0).getBoundingClientRect();
@@ -65,6 +66,10 @@ $(() => {
                 console.log(data);
             });
             showDetailPanel($detail, direction, position);
+            $(document).on("mousedown", () => {
+                console.log("mousedown");
+                $detail.hide();
+            });
         }
     });
 
@@ -132,11 +137,14 @@ function getDirection(clientRect, relative) {
 const words_cache = []; // 100
 
 function getWordDetail(word, callback) {
-    
-    $.ajax({
-        url: `https://api.shanbay.com/bdc/search/?word=${word}`
-    }).done((data) => {
-
-        callback(data);
+    const wordDefinition = words_cache.filter((val) => {
+        return val.word = word;
     });
+    console.log(wordDefinition);
+    // $.ajax({
+    //     url: `https://api.shanbay.com/bdc/search/?word=${word}`
+    // }).done((data) => {
+    //
+    //     callback(data);
+    // });
 }
