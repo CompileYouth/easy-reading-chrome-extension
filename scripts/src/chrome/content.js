@@ -40,14 +40,23 @@ $(() => {
     const $detail = $(`
         <div class="word-detail">
             <div class="overlay"></div>
+            <div class="tip-error">未找到所选单词</div>
             <header>
-                <span class="word"></span>
-                <span class="microphone"></span>
+                <div class="word"></div>
+                <div class="pronu">
+                    <span class="tip-en">英</span>
+                    <a class="mp mp-en"></a>
+                    <span class="tip-an">美</span>
+                    <a class="mp mp-an"></a>
+                </div>
             </header>
             <main></main>
+            <footer>powered by shanbay.com <a target="_blank">更多</a></footer>
         </div>
     `);
     $(document.body).append($detail);
+    $detail.find(".overlay").hide();
+    $detail.find(".tip-error").hide();
     $detail.hide();
 
     // Listen to mouseup to decide if show detail panel
@@ -62,15 +71,48 @@ $(() => {
                 top: getDetailPanelTop(clientRect, relative),
                 left: getDetailPanelLeft(clientRect, relative)
             };
-            getWordDetail(selection.trim(), (data) => {
-                console.log(data);
+
+            $detail.find(".overlay").show();
+            $detail.find(".tip-error").hide();
+            getWordDetail(selection.trim(), (res) => {
+                console.log(res);
+                $detail.find(".overlay").hide();
+                if (res.status_code === 1) {
+                    $detail.find(".tip-error").show();
+                }
+                else {
+                    // show detail
+                    $detail.find(".word").text(res.data.content);
+                    console.log(res.data.content);
+                    $detail.find(".pronu > .mp-en").attr("href", res.data.uk_audio);
+                    $detail.find(".pronu > .mp-an").attr("href", res.data.us_audio);
+                    $detail.find("main").text(res.data.definition);
+                    $detail.find("footer > a").attr("href", `https://www.shanbay.com/bdc/vocabulary/${res.data.conent_id}/`)
+
+                    const uk_audio = $('<audio id="uk_audio" style="visibility:hidden" autoplay><source type="audio/mp3" /></audio>').replaceWith('#uk_audio')[0];;
+		            const us_audio = $('<audio id="es_audio" style="visibility:hidden" autoplay><source type="audio/mp3" /></audio>').replaceWith('#us_audio')[0];
+            		$detail.find(".pronu > .mp-en").click((e) => {
+            			e.preventDefault();
+            			e.stopPropagation();
+            			uk_audio.setAttribute("src", $detail.find(".pronu > .mp-en").attr("href"));
+            			uk_audio.load();
+            		});
+                    $detail.find(".pronu > .mp-an").click((e) => {
+            			e.preventDefault();
+            			e.stopPropagation();
+            			us_audio.setAttribute("src", $detail.find(".pronu > .mp-an").attr("href"));
+            			us_audio.load();
+            		});
+                }
             });
             showDetailPanel($detail, direction, position);
-            $(document).on("mousedown", () => {
-                console.log("mousedown");
-                $detail.hide();
-            });
+
         }
+    });
+
+    $(document).not(".word-detail").on("mousedown", () => {
+        console.log("mousedown");
+        $detail.hide();
     });
 
 });
@@ -134,17 +176,10 @@ function getDirection(clientRect, relative) {
     }
 }
 
-const words_cache = []; // 100
-
 function getWordDetail(word, callback) {
-    const wordDefinition = words_cache.filter((val) => {
-        return val.word = word;
+    $.ajax({
+        url: `https://api.shanbay.com/bdc/search/?word=${word}`
+    }).done((data) => {
+        callback(data);
     });
-    console.log(wordDefinition);
-    // $.ajax({
-    //     url: `https://api.shanbay.com/bdc/search/?word=${word}`
-    // }).done((data) => {
-    //
-    //     callback(data);
-    // });
 }
