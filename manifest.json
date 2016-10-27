@@ -23,6 +23,8 @@
         "tabs",
         "contextMenus",
         "http://*.theguardian.com/",
-        "https://*.theguardian.com/"
+        "https://*.theguardian.com/",
+        "http://*/",
+        "https://*/"
     ]
 }
