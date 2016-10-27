@@ -61,7 +61,9 @@ $(() => {
                 top: getDetailPanelTop(clientRect, relative),
                 left: getDetailPanelLeft(clientRect, relative)
             };
-
+            getWordDetail(selection.trim(), (data) => {
+                console.log(data);
+            });
             showDetailPanel($detail, direction, position);
         }
     });
@@ -125,4 +127,16 @@ function getDirection(clientRect, relative) {
     else {
         return "down";
     }
+}
+
+const words_cache = []; // 100
+
+function getWordDetail(word, callback) {
+    
+    $.ajax({
+        url: `https://api.shanbay.com/bdc/search/?word=${word}`
+    }).done((data) => {
+
+        callback(data);
+    });
 }
