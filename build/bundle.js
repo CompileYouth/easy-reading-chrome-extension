@@ -218,7 +218,7 @@ webpackJsonp([0],[
 	        value: function getDetailPanelTop(clientRect, relative) {
 	            if (clientRect.top + clientRect.height + this.detailPanelHeight + this.gap > window.innerHeight) {
 	                // panel is lower than the last line
-	                return clientRect.bottom - relative.top - clientRect.height - this.detailPanelHeight - this.gap;
+	                return clientRect.bottom - relative.top - clientRect.height - this.detailPanelHeight - this.gap - 25;
 	            } else {
 	                return clientRect.bottom - relative.top + this.gap;
 	            }

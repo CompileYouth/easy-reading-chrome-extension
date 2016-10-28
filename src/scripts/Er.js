@@ -188,7 +188,7 @@ export default class Shanbay {
     getDetailPanelTop(clientRect, relative) {
         if (clientRect.top + clientRect.height + this.detailPanelHeight + this.gap > window.innerHeight) {
             // panel is lower than the last line
-            return clientRect.bottom - relative.top - clientRect.height - this.detailPanelHeight - this.gap;
+            return clientRect.bottom - relative.top - clientRect.height - this.detailPanelHeight - this.gap - 25;
         }
         else {
             return clientRect.bottom - relative.top + this.gap;
@@ -198,7 +198,7 @@ export default class Shanbay {
     getDetailPanelLeft(clientRect, relative) {
         if (clientRect.left + this.detailPanelWidth + this.gap > window.innerWidth) {
             // panel is overrided by right border
-            return window.innerWidth - this.detailPanelWidth - this.gap -20;
+            return window.innerWidth - this.detailPanelWidth - this.gap - 20;
         }
         else {
             return clientRect.left - relative.left;
