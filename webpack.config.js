@@ -8,7 +8,7 @@ module.exports = {
         er: [ "./src/scripts/index.js", "./src/style/index.less" ]
     },
     output: {
-        path: path.resolve("./"),
+        path: path.resolve("./build"),
         filename: "bundle.js"
     },
     module: {
