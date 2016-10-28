@@ -16,6 +16,16 @@ $(() => {
         "body > footer"
     ];
 
+    // const $tools = $(`
+    //     <div class="tools">
+    //         <div class="pre"></div>
+    //         <div class="next"></div>
+    //     </div>
+    // `);
+    // $(document.body).append($tools);
+
+    let pageCount;
+
     $sb.click((e) => {
         $sb.addClass("toReadable");
         $(`.l-side-margins`).css({
@@ -28,7 +38,11 @@ $(() => {
                 $(hiddenEles[i]).hide();
             }
             $sb.addClass("readable");
-            window.scrollTo(0, 0);
+            $(document.body).scrollTop(0);
+            const totalHeight = $(document.body).height();
+            const pageHeight = window.innerHeight;
+            pageCount = Math.ceil(totalHeight / pageHeight);
+            $(document.body).height(pageCount * pageHeight);
 
             setTimeout(() => {
                 $(`.l-side-margins`).addClass("reading");
@@ -114,6 +128,20 @@ $(() => {
                 }
 
             });
+        }
+    });
+
+    let currentPage = 1;
+    $(document.body).on("keyup", (e) => {
+        if (e.keyCode === 39 && currentPage < pageCount) {
+            currentPage = currentPage + 1;
+            //document.body.scrollTop = window.innerHeight * (currentPage - 1);
+            $(document.body).scrollTop(window.innerHeight * (currentPage - 1));
+        }
+        else if (e.keyCode === 37 && currentPage > 1) {
+            currentPage = currentPage - 1;
+            //document.body.scrollTop = window.innerHeight * (currentPage - 1);
+            $(document.body).scrollTop(window.innerHeight * (currentPage - 1));
         }
     });
 
