@@ -119,3 +119,9 @@ body > .overlay {
     float: right;
     margin-right: 12px;
 }
+
+
+/*prevent aside show*/
+#article > .content__main .content__main-column > .content__article-body > aside {
+    display: none;
+}

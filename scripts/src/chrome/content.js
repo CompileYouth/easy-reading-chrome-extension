@@ -11,7 +11,7 @@ $(() => {
         "#article > header > div.content__header .content__labels",
         "#article .content__main .content__secondary-column",
         "#article > .content__main .content__meta-container",
-        "#article .content__main .gs-container .content__main-column .content__article-body .element",
+        "#article .content__main .gs-container .content__main-column .content__article-body aside",
         "#article > .content__main .submeta",
         "body > footer"
     ];
