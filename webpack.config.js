@@ -5,7 +5,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     entry: {
         vendor: [ "jquery" ],
-        er: [ "./src/scripts/index.js", "./src/style/index.css" ]
+        er: [ "./src/scripts/index.js", "./src/style/index.less" ]
     },
     output: {
         path: path.resolve("./"),
@@ -23,7 +23,8 @@ module.exports = {
                 loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
             },
             {
-                test: /\.(png|jpg|gif)$/, loader: 'url-loader?limit=8192'
+                test: /\.(png|jpg|gif)$/,
+                loader: 'url-loader!file-loader?limit=8192'
             }
         ]
     },
