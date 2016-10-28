@@ -13,6 +13,7 @@ $(() => {
         "#article > .content__main .content__meta-container",
         "#article .content__main .gs-container .content__main-column .content__article-body aside",
         "#article > .content__main .submeta",
+        "#adContent",
         "body > footer"
     ];
 
