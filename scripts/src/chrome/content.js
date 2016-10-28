@@ -16,14 +16,6 @@ $(() => {
         "body > footer"
     ];
 
-    // const $tools = $(`
-    //     <div class="tools">
-    //         <div class="pre"></div>
-    //         <div class="next"></div>
-    //     </div>
-    // `);
-    // $(document.body).append($tools);
-
     let pageCount;
 
     $sb.click((e) => {
@@ -73,9 +65,11 @@ $(() => {
     $detail.find(".tip-error").hide();
     $detail.hide();
 
+    const uk_audio = $('<audio id="uk_audio" style="visibility:hidden" autoplay><source type="audio/mp3" /></audio>').replaceWith('#uk_audio')[0];
+    const us_audio = $('<audio id="es_audio" style="visibility:hidden" autoplay><source type="audio/mp3" /></audio>').replaceWith('#us_audio')[0];
+
     // Listen to mouseup to decide if show detail panel
     $(document.body).on("mouseup", (e) => {
-        console.log("mouseup");
         const selection = getSelectionText();
         if (selection !== "") {
             const clientRect = window.getSelection().getRangeAt(0).getBoundingClientRect();
@@ -100,9 +94,8 @@ $(() => {
                     $detail.find("main").text(res.data.definition);
                     $detail.find("footer > a").attr("href", `https://www.shanbay.com/bdc/vocabulary/${res.data.conent_id}/`);
 
-                    const uk_audio = $('<audio id="uk_audio" style="visibility:hidden" autoplay><source type="audio/mp3" /></audio>').replaceWith('#uk_audio')[0];;
-		            const us_audio = $('<audio id="es_audio" style="visibility:hidden" autoplay><source type="audio/mp3" /></audio>').replaceWith('#us_audio')[0];
-            		$detail.find(".pronu > .mp-en").click((e) => {
+                    $detail.find(".pronu > .mp-en").click((e) => {
+                        console.log("click pro");
             			uk_audio.setAttribute("src", $detail.find(".pronu > .mp-en").attr("data-play"));
             			uk_audio.load();
             		});
@@ -118,13 +111,12 @@ $(() => {
             }
 
             $(document.body).on("mousedown", (e) => {
-                console.log("mousedown");
                 if (!$.contains($detail[0], e.target)) {
                     $detail.hide();
                     isShow = false;
-                }
-                else {
-                    console.log("do nothing");
+                    $(document.body).off("mousedown");
+                    $detail.find(".pronu > .mp-en").off("click");
+                    $detail.find(".pronu > .mp-an").off("click");
                 }
 
             });
@@ -135,14 +127,12 @@ $(() => {
     $(document.body).on("keyup", (e) => {
         if (e.keyCode === 39 && currentPage < pageCount) {
             currentPage = currentPage + 1;
-            //document.body.scrollTop = window.innerHeight * (currentPage - 1);
-            $(document.body).scrollTop(window.innerHeight * (currentPage - 1));
         }
         else if (e.keyCode === 37 && currentPage > 1) {
             currentPage = currentPage - 1;
-            //document.body.scrollTop = window.innerHeight * (currentPage - 1);
-            $(document.body).scrollTop(window.innerHeight * (currentPage - 1));
         }
+
+        $(document.body).stop().animate({ scrollTop: window.innerHeight * (currentPage - 1) }, "500", "swing");
     });
 
 });
