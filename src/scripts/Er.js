@@ -11,10 +11,10 @@ export default class Shanbay {
         this.$detail.find(".tip-error").hide();
         this.$detail.hide();
 
-
-
         this.$sb.click(this._$sbClick.bind(this));
-        $(document.body).on("mouseup", this._documentClick.bind(this));
+        $(document.body).on("mouseup", this._documentMouseup.bind(this));
+
+        $(document.body).on("keyup", this._documentKeyup.bind(this));
     }
 
     _init() {
@@ -57,6 +57,9 @@ export default class Shanbay {
         this.detailPanelHeight = 120;
         this.gap = 10;
 
+        this.pageCount = -1;
+        this.currentPage = 1;
+
         this._show = false;
     }
 
@@ -85,12 +88,12 @@ export default class Shanbay {
 
             setTimeout(() => {
                 $(`.l-side-margins`).addClass("reading");
-            }, 500);
-        }, 800);
+            }, 300);
+        }, 500);
 
     }
 
-    _documentClick() {
+    _documentMouseup() {
         const selection = this.getSelectionText();
         if (selection !== "") {
             const clientRect = window.getSelection().getRangeAt(0).getBoundingClientRect();
@@ -100,7 +103,9 @@ export default class Shanbay {
                 left: this.getDetailPanelLeft(clientRect, relative)
             };
 
-            this.$detail.find(".overlay").show();
+            if (!this._isShow) {
+                this.$detail.find(".overlay").show();
+            }
             this.$detail.find(".tip-error").hide();
             this.getWordDetail(selection.trim(), (res) => {
                 this.$detail.find(".overlay").hide();
@@ -140,6 +145,19 @@ export default class Shanbay {
                 }
 
             });
+        }
+    }
+
+    _documentKeyup(e) {
+        if (e.keyCode === 39 && this.currentPage < this.pageCount) {
+            this.currentPage = this.currentPage + 1;
+
+            $(document.body).stop().animate({ scrollTop: window.innerHeight * (this.currentPage - 1) }, "500", "swing");
+        }
+        else if (e.keyCode === 37 && this.currentPage > 1) {
+            this.currentPage = this.currentPage - 1;
+
+            $(document.body).stop().animate({ scrollTop: window.innerHeight * (this.currentPage - 1) }, "500", "swing");
         }
     }
 
