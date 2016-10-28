@@ -15,7 +15,8 @@
         {
             "matches": [ "http://www.theguardian.com/*", "https://www.theguardian.com/*" ],
             "js": [ "scripts/src/lib/jquery-3.1.1.min.js", "scripts/src/chrome/content.js" ],
-            "css": [ "style/style.css" ]
+            "css": [ "style/style.css" ],
+            "run_at": "document_start"
         }
     ],
 
@@ -25,6 +26,9 @@
         "http://*.theguardian.com/",
         "https://*.theguardian.com/",
         "http://*/",
-        "https://*/"
-    ]
+        "https://*/",
+        "tts"
+    ],
+
+    "content_security_policy": "default-src 'self'; media-src *.shanbay.com"
 }

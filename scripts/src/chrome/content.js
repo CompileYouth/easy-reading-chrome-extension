@@ -28,7 +28,7 @@ $(() => {
                 $(hiddenEles[i]).hide();
             }
             $sb.addClass("readable");
-
+            window.scrollTo(0, 0);
 
             setTimeout(() => {
                 $(`.l-side-margins`).addClass("reading");
@@ -45,9 +45,9 @@ $(() => {
                 <div class="word"></div>
                 <div class="pronu">
                     <span class="tip-en">英</span>
-                    <a class="mp mp-en"></a>
+                    <span class="mp mp-en"></span>
                     <span class="tip-an">美</span>
-                    <a class="mp mp-an"></a>
+                    <span class="mp mp-an"></span>
                 </div>
             </header>
             <main></main>
@@ -60,13 +60,12 @@ $(() => {
     $detail.hide();
 
     // Listen to mouseup to decide if show detail panel
-    $(document).on("mouseup", (e) => {
+    $(document.body).on("mouseup", (e) => {
         console.log("mouseup");
         const selection = getSelectionText();
         if (selection !== "") {
             const clientRect = window.getSelection().getRangeAt(0).getBoundingClientRect();
             const relative = document.body.parentNode.getBoundingClientRect();
-            const direction = getDirection(clientRect, relative);
             const position = {
                 top: getDetailPanelTop(clientRect, relative),
                 left: getDetailPanelLeft(clientRect, relative)
@@ -75,7 +74,6 @@ $(() => {
             $detail.find(".overlay").show();
             $detail.find(".tip-error").hide();
             getWordDetail(selection.trim(), (res) => {
-                console.log(res);
                 $detail.find(".overlay").hide();
                 if (res.status_code === 1) {
                     $detail.find(".tip-error").show();
@@ -83,43 +81,47 @@ $(() => {
                 else {
                     // show detail
                     $detail.find(".word").text(res.data.content);
-                    console.log(res.data.content);
-                    $detail.find(".pronu > .mp-en").attr("href", res.data.uk_audio);
-                    $detail.find(".pronu > .mp-an").attr("href", res.data.us_audio);
+                    $detail.find(".pronu > .mp-en").attr("data-play", res.data.audio_addresses.uk[0]);
+                    $detail.find(".pronu > .mp-an").attr("data-play", res.data.audio_addresses.us[0]);
                     $detail.find("main").text(res.data.definition);
-                    $detail.find("footer > a").attr("href", `https://www.shanbay.com/bdc/vocabulary/${res.data.conent_id}/`)
+                    $detail.find("footer > a").attr("href", `https://www.shanbay.com/bdc/vocabulary/${res.data.conent_id}/`);
 
                     const uk_audio = $('<audio id="uk_audio" style="visibility:hidden" autoplay><source type="audio/mp3" /></audio>').replaceWith('#uk_audio')[0];;
 		            const us_audio = $('<audio id="es_audio" style="visibility:hidden" autoplay><source type="audio/mp3" /></audio>').replaceWith('#us_audio')[0];
             		$detail.find(".pronu > .mp-en").click((e) => {
-            			e.preventDefault();
-            			e.stopPropagation();
-            			uk_audio.setAttribute("src", $detail.find(".pronu > .mp-en").attr("href"));
+            			uk_audio.setAttribute("src", $detail.find(".pronu > .mp-en").attr("data-play"));
             			uk_audio.load();
             		});
                     $detail.find(".pronu > .mp-an").click((e) => {
-            			e.preventDefault();
-            			e.stopPropagation();
-            			us_audio.setAttribute("src", $detail.find(".pronu > .mp-an").attr("href"));
+            			us_audio.setAttribute("src", $detail.find(".pronu > .mp-an").attr("data-play"));
             			us_audio.load();
             		});
                 }
             });
-            showDetailPanel($detail, direction, position);
 
+            if (!isShow) {
+                showDetailPanel($detail, position);
+            }
+
+            $(document.body).on("mousedown", (e) => {
+                console.log("mousedown");
+                if (!$.contains($detail[0], e.target)) {
+                    $detail.hide();
+                    isShow = false;
+                }
+                else {
+                    console.log("do nothing");
+                }
+
+            });
         }
-    });
-
-    $(document).not(".word-detail").on("mousedown", () => {
-        console.log("mousedown");
-        $detail.hide();
     });
 
 });
 
 let isShow = false;
 
-function showDetailPanel($detail, direction, position) {
+function showDetailPanel($detail, position) {
     if (isShow) {
         $detail.hide();
     }
@@ -164,15 +166,6 @@ function getDetailPanelLeft(clientRect, relative) {
     }
     else {
         return clientRect.left - relative.left;
-    }
-}
-
-function getDirection(clientRect, relative) {
-    if (clientRect.top + clientRect.height + detailPanelHeight + gap > window.innerHeight) {
-        return "up";
-    }
-    else {
-        return "down";
     }
 }
 

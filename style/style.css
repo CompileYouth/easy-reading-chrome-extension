@@ -30,7 +30,7 @@ body > .overlay {
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: #F9DFAC;
+    background-color: #FFFFF9;
     cursor: default;
 }
 
@@ -97,12 +97,13 @@ body > .overlay {
     position: relative;
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAATCAYAAACUef2IAAABF0lEQVR42u2UMWqFQBRF7cIvkrVkKWlcgaKthboAtbISQQtLQRQLC20VrKxULMXCSnQZN5khBhETEv3FL/JgmDeXx+Gid4ZhHrGCIHj92J4vQVzXxV5LkgS6ruMSlGXZLeDLpWEYyLIMp6FbMNHiOKbnaZrA8zzpb6egO8cvHMdhWRaqmaaJsiy/d72FHK3tbBiG8H2fakVRwLKs+4CHYYCqqlQbxxGKotwHXFXVmyAI2PeXweSnSZKEfX8ZnOc5bNumWl3XILG7An5aZ2VZRtu2FOZ5HtI0/X2WHcc5dEwyrGnaer6RHM/z/LdLsoWvWtd1+HwnmCiKQGZOXekVvtfJpxBFESQVp9+LI1dN06DvezD/9VO9A0IdHPo7H/9ZAAAAAElFTkSuQmCC");
     background-repeat: no-repeat;
+    cursor: pointer;
 }
 
 .word-detail main {
     padding: 0 3px;
     height: 50px;
-    overflow-y: scroll;
+    overflow-y: auto;
     font-size: 14px;
 }
 
