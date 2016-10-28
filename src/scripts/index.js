@@ -1,3 +1,8 @@
-console.log("hello world", $);
-console.log($(".top-banner-ad-container"), $(".fadfadfasdfdsa"));
-console.log($("document.body"));
+import Er from "./Er.js";
+
+$(() => {
+    $(".top-banner-ad-container").remove();
+    $(".ad-slot-container").remove();
+
+    const easyReading = new Er();
+});
