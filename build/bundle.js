@@ -71,7 +71,7 @@ webpackJsonp([0],[
 
 	            this._hiddenEles = ["body > header", "body > .l-side-margins > .content-footer", "#article > header > div.content__header .content__labels", "#article .content__main .content__secondary-column", "#article > .content__main .content__meta-container", "#article .content__main .gs-container .content__main-column .content__article-body aside", "#article > .content__main .submeta", "#adContent", "body > footer"];
 
-	            this.$detail = $("\n            <div class=\"word-detail\">\n                <div class=\"overlay\"></div>\n                <div class=\"tip-error\">\u672A\u627E\u5230\u6240\u9009\u5355\u8BCD</div>\n                <header>\n                    <div class=\"word\"></div>\n                    <div class=\"pronu\">\n                        <span class=\"tip-en\">\u82F1</span>\n                        <span class=\"mp mp-en\"></span>\n                        <span class=\"tip-an\">\u7F8E</span>\n                        <span class=\"mp mp-an\"></span>\n                    </div>\n                </header>\n                <main></main>\n                <footer>powered by shanbay.com <a target=\"_blank\">\u66F4\u591A</a></footer>\n            </div>\n        ");
+	            this.$detail = $("\n            <div class=\"word-detail\">\n                <div class=\"overlay\"></div>\n                <div class=\"tip-error\">\u672A\u627E\u5230\u6240\u9009\u5355\u8BCD</div>\n                <header>\n                    <div class=\"word\"></div>\n                    <div class=\"pronu\">\n                        <span class=\"tip-en\">\u82F1</span>\n                        <span class=\"mp mp-en\"></span>\n                        <span class=\"tip-an\">\u7F8E</span>\n                        <span class=\"mp mp-an\"></span>\n                    </div>\n                </header>\n                <main></main>\n                <footer>Powered by shanbay.com <a target=\"_blank\">\u66F4\u591A</a></footer>\n            </div>\n        ");
 
 	            this.uk_audio = $('<audio id="uk_audio" style="visibility:hidden" autoplay><source type="audio/mp3" /></audio>').replaceWith('#uk_audio')[0];
 	            this.us_audio = $('<audio id="es_audio" style="visibility:hidden" autoplay><source type="audio/mp3" /></audio>').replaceWith('#us_audio')[0];
@@ -218,7 +218,7 @@ webpackJsonp([0],[
 	        value: function getDetailPanelTop(clientRect, relative) {
 	            if (clientRect.top + clientRect.height + this.detailPanelHeight + this.gap > window.innerHeight) {
 	                // panel is lower than the last line
-	                return clientRect.bottom - relative.top - clientRect.height - this.detailPanelHeight - this.gap;
+	                return clientRect.bottom - relative.top - clientRect.height - this.detailPanelHeight - this.gap - 25;
 	            } else {
 	                return clientRect.bottom - relative.top + this.gap;
 	            }
