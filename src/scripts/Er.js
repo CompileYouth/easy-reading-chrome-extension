@@ -46,7 +46,7 @@ export default class Shanbay {
                     </div>
                 </header>
                 <main></main>
-                <footer>powered by shanbay.com <a target="_blank">更多</a></footer>
+                <footer>Powered by shanbay.com <a target="_blank">更多</a></footer>
             </div>
         `);
 
